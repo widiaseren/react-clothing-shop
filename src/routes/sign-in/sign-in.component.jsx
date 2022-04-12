@@ -19,7 +19,7 @@ const SignIn = () => {
   useEffect( () => {
     async function fetchData(){
       const response = await getRedirectResult(auth);
-      console.log(response)
+      // console.log(response)
       if(response) {
         const userDocRef = await createUserDocumentFromAuth(response.user);
       }
