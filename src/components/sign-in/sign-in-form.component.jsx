@@ -7,18 +7,16 @@ import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 
 
-import './sign-up.styles.scss';
+import './sign-in.styles.scss';
 
 const defaultFormFields = {
-  displayName: '',
   email: '',
   password: '',
-  confirmPassword: ''
 }
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [ formFields, setFormFields ] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { email, password } = formFields;
 
   // console.log(formFields)
 
@@ -29,26 +27,21 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword){
-      alert("password not match");
-      return;
-    }
+    // try {
+    //   const {user} = await createAuthUserwithEmailandPassword(email, password);
+    //   console.log({user})
 
-    try {
-      const {user} = await createAuthUserwithEmailandPassword(email, password);
-      console.log({user})
-
-      await createUserDocumentFromAuth(user, {displayName})
-      alert('user creation success')
-      resetFromField()
-    } catch (error){
-      if (error.code === 'auth/email-already-in-use'){
-        alert('Cannot create user, email already in use');
-      } else {
-        console.log('user creation an error', error);
-      }
-      // console.error(error)
-    }
+    //   await createUserDocumentFromAuth(user, {displayName})
+    //   alert('user creation success')
+    //   resetFromField()
+    // } catch (error){
+    //   if (error.code === 'auth/email-already-in-use'){
+    //     alert('Cannot create user, email already in use');
+    //   } else {
+    //     console.log('user creation an error', error);
+    //   }
+    //   // console.error(error)
+    // }
     
   }
   
@@ -63,15 +56,6 @@ const SignUpForm = () => {
       <h2>Don't have an account?</h2>
       <span>Sign up with your Email and Password</span>
       <form onSubmit={handleSubmit}>
-        <FormInput 
-          type='text' 
-          label='Name'
-          name='displayName'
-          required
-          onChange={handleChange}
-          value={displayName}
-        />
-
         <FormInput 
           type='email'
           label='Email' 
@@ -89,16 +73,6 @@ const SignUpForm = () => {
           onChange={handleChange}
           value={password}
         />
-        
-        <FormInput 
-          type='password' 
-          label='Confirm Password'
-          name='confirmPassword'
-          required
-          onChange={handleChange}
-          value={confirmPassword}
-        />
-
         <Button 
           type='submit'
         > Sign Up </Button>
@@ -108,4 +82,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm;
+export default SignInForm;
