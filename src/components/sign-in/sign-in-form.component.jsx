@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { 
-  createAuthUserwithEmailandPassword,
-  createUserDocumentFromAuth
+  signInWithGooglePopUp,
+  createUserDocumentFromAuth,
+  signInAuthUserwithEmailandPassword
 } from "../../utils/firebase/firebase.component";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-
 
 import './sign-in.styles.scss';
 
@@ -14,11 +14,14 @@ const defaultFormFields = {
   password: '',
 }
 
+const signInWithGoogle = async () => {
+  const { user } = await signInWithGooglePopUp();
+  await createUserDocumentFromAuth(user);
+}
+
 const SignInForm = () => {
   const [ formFields, setFormFields ] = useState(defaultFormFields);
   const { email, password } = formFields;
-
-  // console.log(formFields)
 
   const resetFromField = () => {
     setFormFields(defaultFormFields)
@@ -27,22 +30,23 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // try {
-    //   const {user} = await createAuthUserwithEmailandPassword(email, password);
-    //   console.log({user})
+    try {
+      const {user} = await signInAuthUserwithEmailandPassword(email, password);
+      console.log({user})
 
-    //   await createUserDocumentFromAuth(user, {displayName})
-    //   alert('user creation success')
-    //   resetFromField()
-    // } catch (error){
-    //   if (error.code === 'auth/email-already-in-use'){
-    //     alert('Cannot create user, email already in use');
-    //   } else {
-    //     console.log('user creation an error', error);
-    //   }
-    //   // console.error(error)
-    // }
-    
+      resetFromField()
+    } catch (error){
+      switch(error.code){
+        case 'auth/wrong-password':
+          alert('incorrect password for email');
+          break;
+        case 'auth/user-not-found':
+          alert('no user associated with this email');
+          break;
+        default: 
+        console.log(error);
+      }
+    }
   }
   
   const handleChange = (event) => {
@@ -53,7 +57,7 @@ const SignInForm = () => {
 
   return (
     <div className="sign-up-container">
-      <h2>Don't have an account?</h2>
+      <h2>Already have an account?</h2>
       <span>Sign up with your Email and Password</span>
       <form onSubmit={handleSubmit}>
         <FormInput 
@@ -73,10 +77,10 @@ const SignInForm = () => {
           onChange={handleChange}
           value={password}
         />
-        <Button 
-          type='submit'
-        > Sign Up </Button>
-
+        <div className="buttons-container">
+          <Button type='submit'> Sign In </Button>
+          <Button type='button' buttonType='google' onClick={signInWithGoogle}> Google Sign Ip </Button>
+        </div>
       </form>
     </div>
   )
