@@ -36,7 +36,7 @@ const SignUpForm = () => {
 
     try {
       const {user} = await createAuthUserwithEmailandPassword(email, password);
-      console.log({user})
+      // console.log({user})
 
       await createUserDocumentFromAuth(user, {displayName})
       alert('user creation success')
