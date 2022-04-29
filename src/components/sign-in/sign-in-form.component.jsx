@@ -91,7 +91,7 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type='submit'> Sign In </Button>
-          <Button type='button' buttonType='google' onClick={SignInWithGoogle}> Google Sign Ip </Button>
+          <Button type='button' buttonType='google' onClick={SignInWithGoogle}> Google Sign Up </Button>
         </div>
       </form>
     </div>
