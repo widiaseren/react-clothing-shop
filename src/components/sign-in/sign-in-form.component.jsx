@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { 
-  signInWithGooglePopUp,
   createUserDocumentFromAuth,
   signInAuthUserwithEmailandPassword
 } from "../../utils/firebase/firebase.component";
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-
-import './sign-in.styles.scss';
-
-// import { UserContext } from '../../context/user.context';
+import { ButtonsContainer, SignUpContainer } from "./sign-in.styles.jsx";
 
 const defaultFormFields = {
   email: '',
@@ -20,19 +16,11 @@ const SignInForm = () => {
   const [ formFields, setFormFields ] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  //context
-  // const { setCurrentUser } = useContext(UserContext);
-
   const resetFromField = () => {
     setFormFields(defaultFormFields)
   }
 
   const SignInWithGoogle = async () => {
-    // const { user } = await signInWithGooglePopUp();
-    // setCurrentUser(user);
-    // await createUserDocumentFromAuth(user);
-
-    //move to user.context
     await createUserDocumentFromAuth();
   }
 
@@ -41,12 +29,7 @@ const SignInForm = () => {
 
     try {
       await signInAuthUserwithEmailandPassword(email, password);
-      // console.log({user});
       resetFromField();
-
-      //context
-      // setCurrentUser(user);
-
     } catch (error){
       switch(error.code){
         case 'auth/wrong-password':
@@ -68,7 +51,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <SignUpContainer>
       <h2>Already have an account?</h2>
       <span>Sign up with your Email and Password</span>
       <form onSubmit={handleSubmit}>
@@ -89,12 +72,15 @@ const SignInForm = () => {
           onChange={handleChange}
           value={password}
         />
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type='submit'> Sign In </Button>
-          <Button type='button' buttonType='google' onClick={SignInWithGoogle}> Google Sign Up </Button>
-        </div>
+          <Button 
+            type='button' 
+            buttonType={BUTTON_TYPE.google} 
+            onClick={SignInWithGoogle}> Google Sign Up </Button>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignUpContainer>
   )
 }
 
