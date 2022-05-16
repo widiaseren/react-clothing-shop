@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import { createAction } from '../utils/reducer/reducer.utils';
 
 const addCartItem = (cartItems, productToAdd) => {
   // find if cartItems contains productToAdd
@@ -111,18 +112,16 @@ export const CartProvider = ({children}) => {
       (total, cartItem) => total + cartItem.quantity * cartItem.price, 0
     );
 
-    dispatch({
-      type: CART_ACTION_TYPES.SET_CART_ITEMS,
-      payload: {
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
         cartItems: newCartItems,
         cartTotal: newCartTotal,
         cartItemCount: newCartCount
-      }
-    })
+      })
+    )
+
     //generate newCartTotal
-
     //generate newCartCount
-
     //dispatch new action with payload = {
       // newCartItems,
       // newCartTotal,
@@ -131,26 +130,23 @@ export const CartProvider = ({children}) => {
   }
 
   const addItemToCart = ( productToAdd ) => {
-    const newCartItems = addCartItem(cartItems, productToAdd)
+    const newCartItems = addCartItem(cartItems, productToAdd);
     updateCartItemsReducer(newCartItems);
-  }
+  };
 
   const removeItemFromCart = ( cartItemToRemove ) => {
-    const newCartItems = removeCartItem(cartItems, cartItemToRemove)
+    const newCartItems = removeCartItem(cartItems, cartItemToRemove);
     updateCartItemsReducer(newCartItems);
-  }
+  };
 
   const clearItemFromCart = (cartItemToClear) => {
-    const newCartItems = clearCartItem(cartItems, cartItemToClear)
+    const newCartItems = clearCartItem(cartItems, cartItemToClear);
     updateCartItemsReducer(newCartItems);
-  }
+  };
 
   const setIsCartOpen = (bool) => {
-    dispatch({
-      type: CART_ACTION_TYPES.SET_IS_CART_OPEN,
-      payload: bool
-    })
-  }
+    dispatch(createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, bool));
+  };
 
   const value = {
     isCartOpen,
