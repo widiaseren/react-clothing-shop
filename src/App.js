@@ -18,6 +18,7 @@ import {
 const App = () => {
   const dispatch = useDispatch();
 
+  //user context
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => { 
       // console.log(user)
@@ -26,7 +27,7 @@ const App = () => {
       dispatch(setCurrentUser(user));
     })
     return unsubscribe;
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <Routes>
