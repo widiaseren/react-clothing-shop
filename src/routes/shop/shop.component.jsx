@@ -6,7 +6,7 @@ import Category from "../category/category.component";
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 
 
-import { setCategoriesMap } from '../../store/category/category.action'; 
+import { setCategories } from '../../store/category/category.action'; 
 import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.component';
 
 const Shop = () => {
@@ -16,13 +16,13 @@ const Shop = () => {
   useEffect(() => {
     // addCollectionAndDocuments('categories', SHOP_DATA);
     const getCategoriesMap = async () => {
-      const categoryMap = await getCategoriesAndDocuments('categories');
-      dispatch(setCategoriesMap(categoryMap));
-      // console.log(categoryMap)
+      const categories = await getCategoriesAndDocuments('categories');
+      // console.log(categories)
+      dispatch(setCategories(categories));
     };
 
     getCategoriesMap();
-  }, [dispatch]);
+  }, []);
 
   return (
     <Routes>
