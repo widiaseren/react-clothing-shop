@@ -4,17 +4,22 @@ import storage from 'redux-persist/lib/storage';
 
 import { logger } from './middleware/logger';
 import { rootReducer } from './root-reducer';
+import thunk from 'redux-thunk';
 // import logger from 'redux-logger';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['user'] //not include
+  // blacklist: ['user'] //not include
+  whitelist: ['cart']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(
+const middleWares = [
+  process.env.NODE_ENV !== 'production' && logger,
+  thunk
+].filter(
   Boolean //when false not show anything
 );
 

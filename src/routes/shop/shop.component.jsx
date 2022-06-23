@@ -6,23 +6,28 @@ import Category from "../category/category.component";
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 
 
-import { setCategories } from '../../store/category/category.action'; 
-import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.component';
+import { fetchCategoriesAsync, /*setCategories*/ } from '../../store/category/category.action'; 
+// import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.component';
 
 const Shop = () => {
   const dispatch = useDispatch();
   
   //categories context
-  useEffect(() => {
-    // addCollectionAndDocuments('categories', SHOP_DATA);
-    const getCategoriesMap = async () => {
-      const categories = await getCategoriesAndDocuments('categories');
-      // console.log(categories)
-      dispatch(setCategories(categories));
-    };
+  // useEffect(() => {
+  //   // addCollectionAndDocuments('categories', SHOP_DATA);
+  //   const getCategoriesMap = async () => {
+  //     const categories = await getCategoriesAndDocuments('categories');
+  //     // console.log(categories)
+  //     dispatch(setCategories(categories));
+  //   };
 
-    getCategoriesMap();
-  }, []);
+  //   getCategoriesMap();
+  // }, []);
+
+  //redux-thunk
+  useEffect(() => {
+    dispatch(fetchCategoriesAsync())
+  },[])
 
   return (
     <Routes>
