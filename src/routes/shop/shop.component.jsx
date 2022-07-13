@@ -6,7 +6,7 @@ import Category from "../category/category.component";
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 
 
-import { fetchCategoriesAsync, /*setCategories*/ } from '../../store/category/category.action'; 
+import { fetchCategoriesStart, /*setCategories*/ } from '../../store/category/category.action'; 
 // import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.component';
 
 const Shop = () => {
@@ -26,7 +26,7 @@ const Shop = () => {
 
   //redux-thunk
   useEffect(() => {
-    dispatch(fetchCategoriesAsync())
+    dispatch(fetchCategoriesStart())
   },[])
 
   return (
